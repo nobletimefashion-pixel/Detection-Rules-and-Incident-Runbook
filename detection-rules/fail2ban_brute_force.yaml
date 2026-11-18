@@ -1,0 +1,23 @@
+title: Fail2ban IP Block - Potential Brute-Force Attack
+id: 4f8b21c4-9a7e-4b21-8812-710920abcdef
+status: experimental
+description: Detects when Fail2ban blocks an IP address after repeated authentication failures, mapping to MITRE ATT&CK T1110 (Brute Force).
+references:
+  - [https://attack.mitre.org/techniques/T1110/](https://attack.mitre.org/techniques/T1110/)
+author: Khan Ibrahim (SOC Analyst, HiveSpace)
+date: 2026/11/17
+tags:
+  - attack.credential_access
+  - attack.t1110
+logsource:
+  product: linux
+  service: fail2ban
+detection:
+  selection:
+    - the_message|contains:
+        - "Ban "
+        - "already banned"
+  condition: selection
+falsepositives:
+  - Legitimate users repeatedly mistyping their passwords.
+level: medium
