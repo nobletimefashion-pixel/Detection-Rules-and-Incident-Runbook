@@ -1,13 +1,13 @@
-title: Fail2ban IP Block - Potential Brute-Force Attack
+title: Fail2ban SSH IP Block - Potential Brute-Force Attack
 id: 4f8b21c4-9a7e-4b21-8812-710920abcdef
 status: experimental
-description: Detects when Fail2ban bans an IP address after repeated authentication failures on the management server, mapping to MITRE ATT&CK T1110 (Brute Force).
+description: Detects when Fail2ban bans an IP address on the sshd jail after repeated authentication failures on the HiveSpace management server, mapping to MITRE ATT&CK T1110 (Brute Force).
 references:
   - https://attack.mitre.org/techniques/T1110/
 author: Khan Ibrahim (SOC Analyst, HiveSpace)
 date: 2026/11/19
 tags:
-  - attack.credential-access
+  - attack.credential_access
   - attack.t1110
 logsource:
   product: linux
@@ -16,9 +16,8 @@ detection:
   selection:
     message|contains:
       - "[sshd] Ban "
-      - "Ban "
-      - "Restore Ban "
+      - "[sshd] Restore Ban "
   condition: selection
 falsepositives:
-  - Legitimate users or coworking members repeatedly mistyping credentials and triggering a temporary ban.
+  - Legitimate users or coworking members repeatedly mistyping credentials and triggering a temporary SSH ban.
 level: medium
