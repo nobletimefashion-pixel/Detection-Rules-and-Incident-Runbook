@@ -20,17 +20,20 @@ This runbook provides clear, step-by-step instructions for non-technical staff a
   2. Note the **timestamp** (date and time) when the block occurred.
   3. *Verification:* You have successfully written down or screenshotted the IP and timestamp.
 
-### Step 2: Check the Shared Network Roster
-* **Why:** Freelancers or staff members occasionally mistype their passwords multiple times, accidentally triggering a temporary lockout.
-* **Staff Action:** 
-  1. Cross-reference the blocked IP address against the active list of registered tenant devices or staff workstations currently on the HiveSpace network.
-  2. *Verification:* Determine whether the IP belongs to a current tenant or staff member who may simply need assistance with their credentials.
+### Step 2: Identify Internal vs. External IP Source
+* **Why:** Knowing whether the blocked IP comes from inside the HiveSpace building or from the public internet determines whether it is likely a member on-site or an external scanner.
+* **Staff Action:**
+  1. Look at the first two numbers of the blocked IP address recorded in Step 1:
+     * **Internal HiveSpace LAN:** Starts with `192.168.` or `10.` (originating from a device connected to the coworking Wi-Fi or wired network).
+     * **External Internet:** Starts with any other numbers (originating from outside the building).
+  2. *Verification:* Record whether the IP is **Internal** or **External** in your escalation note.
 
-### Step 3: Assess Intent and Persistence
-* **Why:** A legitimate user usually stops trying after one lockout and asks for help, whereas automated malicious scripts continue attempting access across multiple usernames.
-* **Staff Action:** 
-  1. Check if the system logs show repeated attempts targeting multiple different user accounts from that same IP.
-  2. *Verification:* Confirm if the activity looks like an automated script or an honest user mistake.
+### Step 3: Check for On-Site Lockout Reports
+* **Why:** If the IP is internal, a coworking member or staff member may have just locked themselves out by mistyping their SSH or server credentials.
+* **Staff Action:**
+  1. Check if any member or staff member at the front desk or on the coworking support chat has just reported trouble connecting or being locked out.
+  2. Do **not** attempt to open system log files or unblock the IP yourself; deep log inspection for targeted user accounts is handled by the Security Lead after escalation.
+  3. *Verification:* Note whether a current on-site member claimed the lockout or if no one reported an issue.
 
 ### Step 4: Determine Action (Clear vs. Escalate)
 * **Option A: Do Not Escalate (False Positive / Tenant Mistake)**
