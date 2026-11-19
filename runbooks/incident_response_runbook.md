@@ -6,12 +6,12 @@
 
 ---
 
-## Purpose
+##  Purpose
 This runbook provides clear, step-by-step instructions for non-technical staff at HiveSpace Coworking on how to handle automated security alerts triggered on the management server (specifically when **Fail2ban** blocks an unauthorized IP address for suspected brute-force attempts).
 
 ---
 
-## Incident Workflow: Step-by-Step Guide
+##  Incident Workflow: Step-by-Step Guide
 
 ### Step 1: Locate and Record the Alert
 * **What happens:** When an automated threat (such as repeated failed login attempts) targets the HiveSpace management server, Fail2ban automatically blocks the offending IP address and logs the event.
@@ -41,9 +41,21 @@ This runbook provides clear, step-by-step instructions for non-technical staff a
   * *What to Provide:* Send the recorded IP address, timestamp, and a brief description of the alert.
   * *Verification:* The security lead acknowledges receipt of the escalation.
 
+### Step 5: Post-Escalation Actions & Handoff
+* **Ownership Handoff:** Once escalated, **Khan Ibrahim (Security Lead)** assumes full ownership of the incident investigation and technical remediation.
+* **What the Staff Member Does While Waiting:**
+  1. **Do not unblock the IP:** Leave the Fail2ban block active; never manually lift a ban or alter firewall settings.
+  2. **Monitor the Front Desk & Network:** Keep an eye out for any tenants reporting sudden Wi-Fi/network drops or strange login prompts, and log any unusual physical visitor activity if the IP originated from the local coworking subnet.
+  3. **Maintain Communication:** Keep the alert dashboard open and relay any new repeat alerts from the same subnet to the Security Lead.
+* **What the Security Lead Checks First:**
+  1. **Verify Active Containment:** Confirm via `fail2ban-client status sshd` and UFW rules that the offending IP is actively dropped at the firewall level.
+  2. **Audit Authentication Logs:** Inspect `/var/log/auth.log` or `journalctl -u sshd` around the reported timestamp to verify whether any login attempts succeeded prior to the ban (`Accepted publickey` or `Accepted password`).
+  3. **Scope & Threat Intelligence:** Check if the IP is internal (a compromised tenant device on the HiveSpace LAN) or external (automated internet scanner), and apply a permanent firewall block or isolate the local port if malicious persistence is confirmed.
+  4. **Closure:** Update the staff member once the threat is contained and document the incident summary.
+
 ---
 
-## 📞 Emergency Escalation Contacts
+##  Emergency Escalation Contacts
 * **Security Lead:** Khan Ibrahim
 * **Internal SOC Channel:** HiveSpace Security Operations
 * **Support Desk:** support@hivespace.local
