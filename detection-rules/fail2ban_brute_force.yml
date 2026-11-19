@@ -1,23 +1,24 @@
 title: Fail2ban IP Block - Potential Brute-Force Attack
 id: 4f8b21c4-9a7e-4b21-8812-710920abcdef
 status: experimental
-description: Detects when Fail2ban bans an IP address after repeated authentication failures on the management server, mapping to MITRE ATT&CK T1110 (Brute Force)[cite: 1, 2].
+description: Detects when Fail2ban bans an IP address after repeated authentication failures on the management server, mapping to MITRE ATT&CK T1110 (Brute Force).
 references:
-  - https://attack.mitre.org/techniques/T1110/[cite: 2]
-author: Khan Ibrahim (SOC Analyst, HiveSpace)[cite: 1]
+  - https://attack.mitre.org/techniques/T1110/
+author: Khan Ibrahim (SOC Analyst, HiveSpace)
 date: 2026/11/19
 tags:
-  - attack.credential_access
-  - attack.t1110[cite: 2]
+  - attack.credential-access
+  - attack.t1110
 logsource:
   product: linux
-  service: fail2ban[cite: 2]
+  service: fail2ban
 detection:
   selection:
     message|contains:
       - "[sshd] Ban "
       - "Ban "
+      - "Restore Ban "
   condition: selection
 falsepositives:
-  - Legitimate users or coworking members repeatedly mistyping credentials and triggering a temporary ban[cite: 1].
+  - Legitimate users or coworking members repeatedly mistyping credentials and triggering a temporary ban.
 level: medium
