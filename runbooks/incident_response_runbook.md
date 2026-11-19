@@ -48,12 +48,12 @@ This runbook provides clear, step-by-step instructions for non-technical staff a
 * **Ownership Handoff:** Once escalated, **Khan Ibrahim (Security Lead)** assumes full ownership of the incident investigation and technical remediation.
 * **What the Staff Member Does While Waiting:**
   1. **Do not unblock the IP:** Leave the Fail2ban block active; never manually lift a ban or alter firewall settings.
-  2. **Monitor the Front Desk & Network:** Keep an eye out for any tenants reporting sudden Wi-Fi/network drops or strange login prompts, and log any unusual physical visitor activity if the IP originated from the local coworking subnet.
-  3. **Maintain Communication:** Keep the alert dashboard open and relay any new repeat alerts from the same subnet to the Security Lead.
+  2. **Monitor the Front Desk & Network:** Note if any members report sudden network issues or ask about a lockout, and log any unusual physical visitor activity if the IP was marked **Internal** in Step 2.
+  3. **Maintain Communication:** Keep the alert view open and relay any new repeat alerts from the same IP or subnet to the Security Lead.
 * **What the Security Lead Checks First:**
   1. **Verify Active Containment:** Confirm via `fail2ban-client status sshd` and UFW rules that the offending IP is actively dropped at the firewall level.
-  2. **Audit Authentication Logs:** Inspect `/var/log/auth.log` or `journalctl -u sshd` around the reported timestamp to verify whether any login attempts succeeded prior to the ban (`Accepted publickey` or `Accepted password`).
-  3. **Scope & Threat Intelligence:** Check if the IP is internal (a compromised tenant device on the HiveSpace LAN) or external (automated internet scanner), and apply a permanent firewall block or isolate the local port if malicious persistence is confirmed.
+  2. **Audit Authentication Logs & Targeted Accounts:** Inspect `/var/log/auth.log` or `journalctl -u sshd` around the reported timestamp to check whether multiple different user accounts were targeted (credential stuffing/enumeration) and verify that no login attempts succeeded prior to the ban (`Accepted publickey` or `Accepted password`).
+  3. **Scope & Remediation:** If the IP is **Internal**, identify the local DHCP lease/device on the HiveSpace LAN and inspect or isolate it; if **External**, apply a permanent firewall block if malicious persistence continues.
   4. **Closure:** Update the staff member once the threat is contained and document the incident summary.
 
 ---
