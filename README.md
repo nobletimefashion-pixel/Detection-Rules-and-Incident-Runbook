@@ -21,5 +21,5 @@ task-3-detection-and-runbook/
 ├── runbooks/
 │   └── incident_response_runbook.md # Staff escalation runbook
 ├── evidence/
-│   └── fail2ban_simulation_log.png  # Terminal screenshot / log snippet showing ban event
+│   └── fail2ban_simulation_log.png  # Terminal screenshot showing simulated failed SSH logins, fail2ban-client banning 192.0.2.50
 └── README.md                        # Project documentation
